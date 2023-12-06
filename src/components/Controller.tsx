@@ -4,6 +4,9 @@ import ChatBox from "./ChatBox";
 import ChatWindow from "./ChatWindow";
 import axios from "axios";
 
+const LOCAL_HOST = "http://127.0.0.1:8000";
+const REMOTE_HOST = "https://mailia-api.onrender.com/";
+
 function Controller() {
   // Create a ref for out scroll window
   const scrollableDivRef = useRef<HTMLDivElement>(null);
@@ -30,7 +33,7 @@ function Controller() {
   const requestMaliaComplaint = async (nonsense: string) => {
     try {
       const res = await axios.post(
-        "http://127.0.0.1:8000/post-malia-complaint/",
+        LOCAL_HOST + "/post-malia-complaint/",
         { nonsense: nonsense }
       );
       const complaint = res.data.complaint;
@@ -50,7 +53,7 @@ function Controller() {
   const fetchWholeChatHistory = async () => {
     try {
       const res = await axios.get(
-        "http://127.0.0.1:8000/get-whole-chat-history"
+        REMOTE_HOST + "/get-whole-chat-history"
       );
       const chatHistory = res.data;
 
@@ -64,7 +67,7 @@ function Controller() {
   const requestBackendPersistMemroy = async () => {
     try {
       const res = await axios.get(
-        "http://127.0.0.1:8000/request-persist-to-memory"
+        REMOTE_HOST + "/request-persist-to-memory"
       );
       const status = res.data.status;
       console.log(status);
@@ -89,7 +92,7 @@ function Controller() {
 
       // Send audio to backend
       const axiosResponse = await axios.post(
-        "http://127.0.0.1:8000/post-audio-and-get-jay-text/",
+        REMOTE_HOST + "/post-audio-and-get-jay-text/",
         formData,
         {
           headers: { "Content-Type": "audio/mpeg" },
@@ -107,7 +110,7 @@ function Controller() {
   const getMaliaMessage = async () => {
     try {
       const response = await axios.get(
-        "http://127.0.0.1:8000/get-malia-text-response"
+        REMOTE_HOST + "/get-malia-text-response"
       );
       const messages = response.data;
 
@@ -123,7 +126,7 @@ function Controller() {
 
   // get malia audio response
   const getMaliaAudioAndPlay = async () => {
-    const endpoint = "http://127.0.0.1:8000/get-malia-audio-response";
+    const endpoint =  REMOTE_HOST + "/get-malia-audio-response";
     try {
       const response = await axios.get(
         endpoint,
@@ -199,8 +202,7 @@ function Controller() {
 
   // Send user text and get back malia voice
   const sendTextAndGetMaliaMessage = async (text: string) => {
-    const endpoint =
-      "http://127.0.0.1:8000/post-user-text-and-get-malia-text/";
+    const endpoint = REMOTE_HOST + "/post-user-text-and-get-malia-text/";
 
     const userText = { user_text: text };
     try {
