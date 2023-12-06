@@ -200,7 +200,7 @@ function Controller() {
   // Send user text and get back malia voice
   const sendTextAndGetMaliaMessage = async (text: string) => {
     const endpoint =
-      "http://127.0.0.1:8000/post-user-text-and-get-malia-voice/";
+      "http://127.0.0.1:8000/post-user-text-and-get-malia-text/";
 
     const userText = { user_text: text };
     try {
