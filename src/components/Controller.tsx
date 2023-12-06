@@ -329,6 +329,7 @@ function Controller() {
           setMessages={setMessages}
           isLoading={isLoading}
           maliaComplaint={maliaComplaint}
+          remote_host={REMOTE_HOST}
         />
         <div
           ref={scrollableDivRef}

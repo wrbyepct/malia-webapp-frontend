@@ -6,10 +6,11 @@ type Props = {
   setMessages: any;
   isLoading: boolean;
   maliaComplaint: string;
+  remote_host: string
 };
 
 
-function Title({ setMessages, isLoading, maliaComplaint }: Props) {
+function Title({ setMessages, isLoading, maliaComplaint, remote_host }: Props) {
   // Signal MALIA's memeory is being resetting
   const [isResetting, setIsResetting] = useState(false);
   const [alert, setAlert] = useState("Hey, you are not gonna acutally do it, are you...?")
@@ -22,7 +23,7 @@ function Title({ setMessages, isLoading, maliaComplaint }: Props) {
       
       // Request backend to reset memory and chat history
       await axios
-      .get("http://127.0.0.1:8000/reset")
+      .get( remote_host + "/reset")
       .then((res) => {
         if (res.status == 200) {
           setMessages([]);
