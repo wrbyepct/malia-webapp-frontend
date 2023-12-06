@@ -33,7 +33,7 @@ function Controller() {
   const requestMaliaComplaint = async (nonsense: string) => {
     try {
       const res = await axios.post(
-        LOCAL_HOST + "/post-malia-complaint/",
+        REMOTE_HOST + "/post-malia-complaint/",
         { nonsense: nonsense }
       );
       const complaint = res.data.complaint;
