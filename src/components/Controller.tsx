@@ -5,7 +5,7 @@ import ChatWindow from "./ChatWindow";
 import axios from "axios";
 
 const LOCAL_HOST = "http://127.0.0.1:8000";
-const REMOTE_HOST = "https://mailia-api.onrender.com/";
+const REMOTE_HOST = "https://mailia-api.onrender.com";
 
 function Controller() {
   // Create a ref for out scroll window
