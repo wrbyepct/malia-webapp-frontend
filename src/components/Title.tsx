@@ -42,8 +42,8 @@ function Title({ setMessages, isLoading, maliaComplaint }: Props) {
     }
   };
   return (
-  
-    <div className="rounded-3xl mx-auto max-w-700 max-h-title bg-cool-dark-light font-bold">
+    // Title container
+    <div className=" md:rounded-3xl mx-auto max-w-700 max-h-title bg-cool-dark-light font-bold">
       {/* If resetting memory, display 'Oh no' */}
       { isResetting ? 
       (<p className="text-white text-center text-4xl px-20 py-10 animate-pulse">What? wait! Oh no...</p>) 
@@ -56,7 +56,7 @@ function Title({ setMessages, isLoading, maliaComplaint }: Props) {
           </div>
         )  :(
         <div >
-          <div className="text-white text-center text-4xl px-10 py-7">
+          <div className="text-white text-center text-xl sm:text-2xl md:text-4xl md:px-10 py-7">
             <div className="mb-5">You speak</div>
             <div>MALIA listens and remembers...</div>
           </div>
@@ -73,7 +73,6 @@ function Title({ setMessages, isLoading, maliaComplaint }: Props) {
         )}
       
     </div>
-
 
   );
 }

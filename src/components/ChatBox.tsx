@@ -24,7 +24,7 @@ function ChatBox({ handleStop, handleUserTextSent}: Props) {
  
 
   return (
-    <div className="w-9/12 min-w-[600px] max-w-700 rounded-lg fixed bottom-0 flex left-1/2 
+    <div className="w-full sm:w-9/12 md:min-w-[600px] max-w-700 rounded-lg fixed bottom-0 flex left-1/2 
     transform -translate-x-1/2 mb-3 bg-cool-dark">
       <div className="w-full h-auto p-2">
         <MultilineInput text={text} setText={setText} handleUserTextSent={handleUserTextSent}/>

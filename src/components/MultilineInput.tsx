@@ -26,7 +26,7 @@ const MultilineInput: React.FC<Props> = ( {text, setText, handleUserTextSent}) =
   return (
     <textarea
       placeholder="If you're done talking, you could use some typing"
-      className="bg-transparent h-full w-full px-2 py-3 resize-none focus:outline-none placeholder:italic text-gray-300" 
+      className="bg-transparent h-full w-full px-2 py-2 md:py-3 resize-none focus:outline-none placeholder:italic text-gray-300" 
       value={text}
       onChange={(e) => setText(e.target.value)}
       onKeyDown={handleKeyDown}
