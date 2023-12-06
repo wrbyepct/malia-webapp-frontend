@@ -16,7 +16,7 @@ function Controller() {
   // and request backend for text response and voice generate
   const [isLoading, setIsLoading] = useState(false);
 
-  // Indicating the chat is starting, every newest malia message has to use type effect
+  // Indicating the chat is starting, every newest malia message has to use typing effect
   const [isChatStart, setChatStart] = useState(false);
 
   // Vairable to store MALIA thought bubble
@@ -26,7 +26,7 @@ function Controller() {
   const [maliaDoneResponding, setMaliaDoneResponding] = useState(false);
 
   
-  // Request malai thought bubble and then update in frontend thought bubble
+  // Request malia thought bubble and then update in frontend thought bubble
   const requestMaliaComplaint = async (nonsense: string) => {
     try {
       const res = await axios.post(
@@ -73,6 +73,8 @@ function Controller() {
     }
   };
 
+
+
   // First send Jay audio to backend and get back text message
   // Because we need to update frontend user message as quick as possible
   const sendAudioAndGetJayText = async (myAudioUrl: string) => {
@@ -100,14 +102,38 @@ function Controller() {
     }
   };
 
-  // Request malia text response, convert to speech and play
+  // Request malia text response
   // and get back text response
   const getMaliaMessage = async () => {
     try {
       const response = await axios.get(
-        "http://127.0.0.1:8000/get-malia-audio-response"
+        "http://127.0.0.1:8000/get-malia-text-response"
       );
       const messages = response.data;
+
+      return messages;
+    } catch (err) {
+      console.error(
+        "Something went wrong when getting malia message from backend",
+        err
+      );
+    }
+  };
+
+
+  // get malia audio response
+  const getMaliaAudioAndPlay = async () => {
+    const endpoint = "http://127.0.0.1:8000/get-malia-audio-response";
+    try {
+      const response = await axios.get(
+        endpoint,
+        { responseType: 'blob' }
+      );
+      
+      const audioBlob = new Blob([response.data], { type: 'audio/mpeg' });
+      const audioUrl = URL.createObjectURL(audioBlob);
+      const audio = new Audio(audioUrl);
+      audio.play();
 
       return messages;
     } catch (err) {
@@ -144,6 +170,7 @@ function Controller() {
     // Request malia text message and time
     const data = await getMaliaMessage();
     console.log(data);
+
     // Update frontend chat history
     if (data) {
       const maliaMessage = {
@@ -154,6 +181,9 @@ function Controller() {
 
       messageArr.push(maliaMessage);
       setMessages(messageArr);
+
+      // Play the audio 
+      await getMaliaAudioAndPlay();
     } else {
       console.log("Something went wrong with the message result");
     }
@@ -165,6 +195,7 @@ function Controller() {
     setMaliaComplaint("*Processing...*");
     setIsLoading(false);
   };
+
 
   // Send user text and get back malia voice
   const sendTextAndGetMaliaMessage = async (text: string) => {
@@ -224,6 +255,9 @@ function Controller() {
 
       messageArr.push(maliaMessage);
       setMessages(messageArr);
+
+      // Play the audio 
+      await getMaliaAudioAndPlay();
     } else {
       console.log("Something went wrong with the message result");
     }
@@ -233,6 +267,7 @@ function Controller() {
     setIsLoading(false);
   };
 
+  // Auto Scroll to bottom if there is new chat content
   useEffect(() => {
     if (scrollableDivRef.current) {
       // If there is a proper documents
@@ -242,8 +277,9 @@ function Controller() {
     }
   });
 
+  // Request backend to persist chat history
   useEffect(() => {
-    // Request backend to persist chat history
+    
     if (maliaDoneResponding) {
       // Every time MALIA done responding, we persist the message to memeory
       requestBackendPersistMemroy();
@@ -251,28 +287,33 @@ function Controller() {
     }
   }, [maliaDoneResponding]);
 
+  // First time the page rendered, grab the whole chat history from backend
   useEffect(() => {
-    // First time the page rendered, grab the whole chat history from backend
+    
     fetchWholeChatHistory();
   }, []);
 
   return (
+    // Render chat window
     <div className="relative h-screen bg-black">
       <div
         className="fixed bg-transparent-purple mx-5 blurred-edges
       inset-0 z-20"
       >
-        {/* Three blobs */}
+        {/* Three blobs chat background */}
+        {/* Purple */}
         <div
           className="fixed top-1/4 right-1/2  
           w-72 h-72 bg-purple-300 rounded-full filter
           opacity-70 blur-xl animate-blob animation-delay-5s"
         ></div>
+        {/* Yellow */}
         <div
           className="fixed top-1/4 left-1/2   
           w-72 h-72 bg-yellow-300 rounded-full filter
           opacity-70 blur-xl animate-blob animation-delay-8s "
         ></div>
+        {/* Pink */}
         <div
           className="fixed top-1/3 left-1/3 
           w-72 h-72 bg-pink-300 rounded-full filter
