@@ -303,7 +303,7 @@ function Controller() {
     
     fetchWholeChatHistory();
     // Check microphone permission
-    checkForMicPermission ();
+    checkForMicPermission();
   }, []);
 
   return (
