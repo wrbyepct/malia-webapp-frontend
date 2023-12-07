@@ -12,24 +12,27 @@ const TypingEffect: React.FC<Props> = ({
   isChatStart,
   typingSpeed = 50
 }) => {
+
   const [displayedMessage, setDisplayedMessage] = useState("");
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   // Typing effect
   useEffect(() => {
     if (isChatStart) {
       // Only when the user sends the message the loading starts
       // and we display the typing effec
-      if (displayedMessage.length < message.length) {
+      if (currentIndex < message.length) {
         setTimeout(
           () => {
-            setDisplayedMessage(message.slice(0, displayedMessage.length+1))
-          },typingSpeed)
+            setCurrentIndex(prevIndex => prevIndex + 1);
+            setDisplayedMessage(message.slice(0, currentIndex));
+          }, typingSpeed)
       }
     } else {
           setDisplayedMessage(message);
         }
     
-  }, [message, isChatStart, displayedMessage])
+  }, [message, isChatStart, currentIndex])
   
     
   return <p>{displayedMessage}</p>;
