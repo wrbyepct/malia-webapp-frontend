@@ -28,6 +28,16 @@ function Controller() {
   // Signal MALIA is done responding, so it can start requesting backend to persist memory
   const [maliaDoneResponding, setMaliaDoneResponding] = useState(false);
 
+  // Ask for microphone permission
+  const checkForMicPermission = async () => {
+    try {
+      await navigator.mediaDevices.getUserMedia({audio: true});
+      
+    } catch(error) {
+      console.error('Permission denided or error occurred', error)
+    }
+      
+  } 
   
   // Request malia thought bubble and then update in frontend thought bubble
   const requestMaliaComplaint = async (nonsense: string) => {
@@ -292,6 +302,8 @@ function Controller() {
   useEffect(() => {
     
     fetchWholeChatHistory();
+    // Check microphone permission
+    checkForMicPermission ();
   }, []);
 
   return (
