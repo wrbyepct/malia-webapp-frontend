@@ -1,5 +1,5 @@
 
-import { ReactMediaRecorder } from "react-media-recorder";
+import { ReactMediaRecorder, ReactMediaRecorderRenderProps } from "react-media-recorder";
 
 const recordBtn = (
     <svg
@@ -25,6 +25,18 @@ type Props = {
 }
 
 function Recorder({ handleStop, btnStyle }: Props) {
+
+  // Check microphone permission
+  const checkAndStartRecording = async (startRecording: ReactMediaRecorderRenderProps['startRecording']) => {
+    try {
+      await navigator.mediaDevices.getUserMedia({audio: true});
+      startRecording();
+    } catch(error) {
+      console.error('Permission denided or error occurred', error)
+    }
+      
+  } 
+
   return (
     <ReactMediaRecorder
           audio
@@ -37,9 +49,11 @@ function Recorder({ handleStop, btnStyle }: Props) {
                     ? "animate-pulse-scale text-red-600"
                     : "text-gray-500")
                 }
-                onMouseDown={startRecording}
+                onMouseDown={() => checkAndStartRecording(startRecording)}
+                onTouchStart={() => checkAndStartRecording(startRecording)}
+                // onMouseDown={startRecording}
+                // onTouchStart={startRecording}
                 onMouseUp={stopRecording}
-                onTouchStart={startRecording}
                 onTouchEnd={stopRecording}
               >
                 {recordBtn}
