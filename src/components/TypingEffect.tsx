@@ -19,8 +19,6 @@ const TypingEffect: React.FC<Props> = ({
     if (isChatStart) {
       // Only when the user sends the message the loading starts
       // and we display the typing effec
-      console.log(`${message}`)
-      console.log('Is malia message')
       if (displayedMessage.length < message.length) {
         setTimeout(
           () => {
