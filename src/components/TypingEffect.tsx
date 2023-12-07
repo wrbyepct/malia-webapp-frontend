@@ -14,6 +14,7 @@ const TypingEffect: React.FC<Props> = ({
 }) => {
   const [displayedMessage, setDisplayedMessage] = useState("");
 
+  // Typing effect
   useEffect(() => {
     if (isChatStart) {
       // Only when the user sends the message the loading starts
