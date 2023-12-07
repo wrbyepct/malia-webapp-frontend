@@ -1,4 +1,4 @@
-import TypingEffect from "./TypeingEffect";
+import TypingEffect from "./TypingEffect";
 
 type MessageProps = {
   message: { sender: string; text: string; time: string };
@@ -40,7 +40,7 @@ const ChatMessage: React.FC<MessageProps> = ({
           </p>
           {/* Chat Bubble */}
           {/* Use TypingEffect if it's MALIA's message */}
-          {message.sender =="MALIA" && lastMessage ? (
+          {message.sender == "MALIA" && lastMessage ? (
             <TypingEffect
               message={message.text}
               isChatStart={isChatStart}

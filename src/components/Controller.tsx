@@ -172,7 +172,6 @@ function Controller() {
    
     // Request malia text message and time
     const data = await getMaliaMessage();
-    console.log(data);
 
     // Update frontend chat history
     if (data) {
@@ -181,7 +180,7 @@ function Controller() {
         text: data.malia_text,
         time: data.malia_time,
       };
-
+      setChatStart(true);
       messageArr.push(maliaMessage);
       setMessages(messageArr);
 
@@ -191,7 +190,7 @@ function Controller() {
       console.log("Something went wrong with the message result");
     }
     
-    setChatStart(true);
+    
     // Done responding, start persist memory
     setMaliaDoneResponding(true);
     // Set malai thougth bubble text to deault
